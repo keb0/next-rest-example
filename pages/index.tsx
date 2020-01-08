@@ -1,6 +1,23 @@
-import Layout from '../components/Layout'
 import Link from 'next/link'
 import fetch from 'isomorphic-unfetch'
+import styled from 'styled-components'
+import Layout from '../components/Layout'
+
+const Section = styled.section`
+  display: flex;
+`
+
+const Nav = styled.nav`
+  flex: 1;
+  background: #ccc;
+  padding: 20px;
+`
+
+const Article = styled.article`
+  flex: 3;
+  background-color: #f1f1f1;
+  padding: 10px;
+`
 
 interface Prefecture {
   name: string
@@ -16,15 +33,25 @@ const Index = (props: Props) => {
   return (
     <Layout>
       <h1>RestApi</h1>
-      <ul>
-        {props.data.map((row: Prefecture) => (
-          <li key={row.name}>
-            <Link href="/p/[id]" as={`/p/${row.name}`}>
-              <a>{row.name}</a>
-            </Link>
-          </li>
-        ))}
-      </ul>
+
+      <Section>
+        <Nav>
+          <ul>
+            {props.data.map((row: Prefecture) => (
+              <li key={row.name}>
+                <Link href="/p/[id]" as={`/p/${row.name}`}>
+                  <a>{row.name}</a>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </Nav>
+
+        <Article>
+          <h1>London</h1>
+          <div>Main</div>
+        </Article>
+      </Section>
     </Layout>
   )
 }

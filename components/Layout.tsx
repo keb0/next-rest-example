@@ -1,4 +1,5 @@
 import Header from './Header'
+import Footer from './Footer'
 
 const layoutStyle = {
   margin: 20,
@@ -15,6 +16,7 @@ export default function Layout(props: Props) {
     <div style={layoutStyle}>
       <Header />
       {props.children}
+      <Footer />
     </div>
   )
 }
