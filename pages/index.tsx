@@ -1,7 +1,9 @@
-import Link from 'next/link'
+import { useState } from 'react'
 import fetch from 'isomorphic-unfetch'
 import styled from 'styled-components'
 import Layout from '../components/Layout'
+import Form from '../components/Form'
+import CategoryList from '../components/CategoryList'
 
 const Section = styled.section`
   display: flex;
@@ -19,37 +21,56 @@ const Article = styled.article`
   padding: 10px;
 `
 
-interface Prefecture {
+interface Product {
   name: string
-  capital: string
-  population: number
+  category: string
+  tags: string
+  title: string
+  url: string
+  description: string
+  img: string
 }
 
 interface Props {
-  data: Prefecture[]
+  data: Product[]
 }
 
-const Index = (props: Props) => {
+export default function Index(props: Props) {
+  async function handleSubmit() {
+    // TODO: CORS対応
+    const res = await fetch('http://localhost:8080')
+    const json = await res.json()
+  }
+
   return (
     <Layout>
       <h1>RestApi</h1>
 
+      <Form handleSubmit={handleSubmit} />
       <Section>
         <Nav>
-          <ul>
-            {props.data.map((row: Prefecture) => (
-              <li key={row.name}>
-                <Link href="/p/[id]" as={`/p/${row.name}`}>
-                  <a>{row.name}</a>
-                </Link>
-              </li>
-            ))}
-          </ul>
+          <CategoryList
+            categoryList={props.data.map(row => {
+              console.log(row)
+              return row.category
+            })}
+          />
         </Nav>
 
         <Article>
           <h1>London</h1>
           <div>Main</div>
+          <ul>
+            {props.data.map(row => (
+              <li key={row.name}>
+                <span>{row.name}</span>
+                <br></br>
+                <span>{row.title}</span>
+                <br></br>
+                <span>{row.description}</span>
+              </li>
+            ))}
+          </ul>
         </Article>
       </Section>
     </Layout>
@@ -62,5 +83,3 @@ Index.getInitialProps = async function() {
 
   return { data: json }
 }
-
-export default Index
