@@ -1,15 +1,18 @@
+import CategoryItem from './CategoryItem'
+import { Pages } from '../interfaces'
+
 interface Props {
-  categoryList: string[]
+  pagesList: Pages[]
 }
 
-export default function CategoryList(props: Props) {
-  return (
-    <ul>
-      {props.categoryList.map((row: string) => (
-        <li key={row}>
-          <span>{row}</span>
-        </li>
-      ))}
-    </ul>
-  )
-}
+const CategoryList: React.FunctionComponent<Props> = ({ pagesList }) => (
+  <ul>
+    {pagesList.map(page => (
+      <li key={page.id.toString()}>
+        <CategoryItem category={page.category} />
+      </li>
+    ))}
+  </ul>
+)
+
+export default CategoryList
