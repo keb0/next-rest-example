@@ -1,9 +1,12 @@
+import { NextPage } from 'next'
 import { useState } from 'react'
-import fetch from 'isomorphic-unfetch'
 import styled from 'styled-components'
 import Layout from '../components/Layout'
 import Form from '../components/Form'
 import CategoryList from '../components/CategoryList'
+import PagesList from '../components/PagesList'
+import { Pages } from '../interfaces'
+import { FetchWrapper } from '../utils/FetchWrapper'
 
 const Section = styled.section`
   display: flex;
@@ -21,25 +24,16 @@ const Article = styled.article`
   padding: 10px;
 `
 
-interface Product {
-  name: string
-  category: string
-  tags: string
-  title: string
-  url: string
-  description: string
-  img: string
-}
-
 interface Props {
-  data: Product[]
+  pages: Pages[]
 }
 
-export default function Index(props: Props) {
-  async function handleSubmit() {
-    // TODO: CORS対応
-    const res = await fetch('http://localhost:8080')
-    const json = await res.json()
+const Index: NextPage<Props> = ({ pages }) => {
+  const [pagesList, setPagesList] = useState<Pages[] | []>(pages || [])
+
+  async function handleSubmit(query: string) {
+    const pages: Pages[] = await FetchWrapper('http://localhost:8080/query')
+    setPagesList(pages)
   }
 
   return (
@@ -49,28 +43,12 @@ export default function Index(props: Props) {
       <Form handleSubmit={handleSubmit} />
       <Section>
         <Nav>
-          <CategoryList
-            categoryList={props.data.map(row => {
-              console.log(row)
-              return row.category
-            })}
-          />
+          <CategoryList pagesList={pagesList} />
         </Nav>
 
         <Article>
-          <h1>London</h1>
-          <div>Main</div>
-          <ul>
-            {props.data.map(row => (
-              <li key={row.name}>
-                <span>{row.name}</span>
-                <br></br>
-                <span>{row.title}</span>
-                <br></br>
-                <span>{row.description}</span>
-              </li>
-            ))}
-          </ul>
+          <h1>Result</h1>
+          <PagesList pagesList={pagesList} />
         </Article>
       </Section>
     </Layout>
@@ -78,8 +56,8 @@ export default function Index(props: Props) {
 }
 
 Index.getInitialProps = async function() {
-  const res = await fetch('http://localhost:8080')
-  const json = await res.json()
-
-  return { data: json }
+  const pages: Pages[] = await FetchWrapper('http://localhost:8080')
+  return { pages }
 }
+
+export default Index
