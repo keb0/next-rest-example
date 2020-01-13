@@ -11,11 +11,11 @@ interface Props {
   children: React.ReactNode
 }
 
-export default function Layout(props: Props) {
+export default function Layout({ children }: Props) {
   return (
     <div style={layoutStyle}>
       <Header />
-      {props.children}
+      {children}
       <Footer />
     </div>
   )

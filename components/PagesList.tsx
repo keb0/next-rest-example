@@ -5,7 +5,7 @@ interface Props {
   pagesList: Pages[]
 }
 
-const PagesList: React.SFC<Props> = ({ pagesList }) => (
+const PagesList: React.SFC<Props> = ({ pagesList }: Props) => (
   <ul>
     {pagesList.map(page => (
       <li key={page.id.toString()}>

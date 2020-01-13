@@ -1,4 +1,4 @@
-export default function Footer() {
+const Footer: React.SFC<{}> = () => {
   return (
     <footer>
       © {new Date().getFullYear()}, Built with
@@ -7,3 +7,5 @@ export default function Footer() {
     </footer>
   )
 }
+
+export default Footer

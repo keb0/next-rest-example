@@ -4,13 +4,11 @@ interface Props {
   page: Pages
 }
 
-const PageItem: React.SFC<Props> = ({ page }) => (
+const PageItem: React.SFC<Props> = ({ page }: Props) => (
   <div>
-    <p>{page.category}</p>
-    <p>{page.name}</p>
     <p>{page.title}</p>
-    <p>{page.img}</p>
     <p>{page.description}</p>
+    <p>{page.url}</p>
     <a href={page.img}>
       <img src={page.img} alt="" />
     </a>

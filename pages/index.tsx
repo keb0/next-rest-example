@@ -36,6 +36,11 @@ const Index: NextPage<Props> = ({ pages }) => {
     setPagesList(pages)
   }
 
+  async function handleCheckboxChange(query: string) {
+    const pages: Pages[] = await FetchWrapper('http://localhost:8080/category')
+    setPagesList(pages)
+  }
+
   return (
     <Layout>
       <h1>RestApi</h1>
@@ -43,7 +48,10 @@ const Index: NextPage<Props> = ({ pages }) => {
       <Form handleSubmit={handleSubmit} />
       <Section>
         <Nav>
-          <CategoryList pagesList={pagesList} />
+          <CategoryList
+            pagesList={pagesList}
+            handleCheckboxChange={handleCheckboxChange}
+          />
         </Nav>
 
         <Article>
