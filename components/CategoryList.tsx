@@ -3,13 +3,17 @@ import { Pages } from '../interfaces'
 
 interface Props {
   pagesList: Pages[]
+  handleCheckboxChange: (e: string) => void
 }
 
-const CategoryList: React.FunctionComponent<Props> = ({ pagesList }) => (
+const CategoryList: React.FC<Props> = (props: Props) => (
   <ul>
-    {pagesList.map(page => (
+    {props.pagesList.map((page: Pages) => (
       <li key={page.id.toString()}>
-        <CategoryItem category={page.category} />
+        <CategoryItem
+          category={page.category}
+          handleCheckboxChange={props.handleCheckboxChange}
+        />
       </li>
     ))}
   </ul>

@@ -4,7 +4,7 @@ const linkStyle = {
   marginRight: 15,
 }
 
-export default function Header() {
+const Header: React.SFC<{}> = () => {
   return (
     <div>
       <Link href="/">
@@ -16,3 +16,5 @@ export default function Header() {
     </div>
   )
 }
+
+export default Header
