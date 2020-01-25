@@ -1,3 +1,4 @@
+import * as React from 'react'
 import { Pages } from '../interfaces'
 
 interface Props {
@@ -6,7 +7,7 @@ interface Props {
 
 const PageItem: React.SFC<Props> = ({ page }: Props) => (
   <div>
-    <p>{page.title}</p>
+    <h2>{page.title}</h2>
     <p>{page.description}</p>
     <p>{page.url}</p>
     <a href={page.img}>
