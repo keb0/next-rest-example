@@ -1,3 +1,4 @@
+import * as React from 'react'
 import PageItem from './PageItem'
 import { Pages } from '../interfaces'
 
